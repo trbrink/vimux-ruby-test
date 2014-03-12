@@ -87,6 +87,10 @@ class RubyTest
             VIM::Buffer.current[line_number] =~ /test '([^']+)'/
         method_name = "test_" + $1.split(" ").join("_")
         break
+      elsif VIM::Buffer.current[line_number] =~ /it "([^"]+)"/ ||
+            VIM::Buffer.current[line_number] =~ /it '([^']+)'/
+        method_name = "\'/#{Regexp.escape($1)}/\'"
+        break
       elsif VIM::Buffer.current[line_number] =~ /should "([^"]+)"/ ||
             VIM::Buffer.current[line_number] =~ /should '([^']+)'/
         method_name = "\"/#{Regexp.escape($1)}/\""
